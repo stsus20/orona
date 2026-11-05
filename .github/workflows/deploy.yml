@@ -1,0 +1,32 @@
+name: Validar proyecto web
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    name: Verificar archivos del proyecto
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar informacion del evento
+        run: |
+          echo "Workflow ejecutado correctamente"
+          echo "Evento: $GITHUB_EVENT_NAME"
+          echo "Rama: $GITHUB_REF_NAME"
+
+      - name: Comprobar que existe index.html
+        run: |
+          test -f index.html
+          echo "OK: index.html existe"
+
+      - name: Mostrar archivos del proyecto
+        run: ls -la
